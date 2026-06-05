@@ -278,7 +278,7 @@ chart_df = pd.DataFrame(
     }
 )
 
-chart = (
+bars = (
     alt.Chart(chart_df)
     .mark_bar(cornerRadiusTopLeft=8, cornerRadiusTopRight=8)
     .encode(
@@ -287,15 +287,15 @@ chart = (
         color=alt.value("#2dd4bf"),
         tooltip=["System:N", "Value:Q", "Display:Q"],
     )
-    .properties(height=320, background="#08161c")
+    .properties(height=320)
 )
 
-text = chart.mark_text(dy=-12, color="#e9fffd", fontSize=14, fontWeight="bold").encode(
+text = bars.mark_text(dy=-12, color="#e9fffd", fontSize=14, fontWeight="bold").encode(
     text=alt.Text("Display:Q")
 )
 
 st.markdown('<div class="section-title">Score Comparison</div>', unsafe_allow_html=True)
-st.altair_chart(chart + text, use_container_width=True)
+st.altair_chart((bars + text).properties(background="#08161c"), use_container_width=True)
 
 st.markdown('<div class="section-title">Why the scores differ</div>', unsafe_allow_html=True)
 st.markdown(
